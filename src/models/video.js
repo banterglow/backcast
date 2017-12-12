@@ -8,8 +8,8 @@ var Video = Backbone.Model.extend({
     this.set('description', video.snippet.description);
   },
 
-  select: function() {
-    this.trigger('select', this);
+  select: function(id) {
+    this.trigger('videoChange', this.collection.select(id));
   }
 
 });

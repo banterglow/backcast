@@ -5,6 +5,7 @@ var AppView = Backbone.View.extend({
   initialize: function() {
     this.videos = new Videos(window.exampleVideoData);
     this.render();
+    this.on('videoChange', console.log('trigger!!'));
   },
 
   render: function() {
@@ -16,11 +17,13 @@ var AppView = Backbone.View.extend({
     }).render();
 
     new VideoPlayerView({
-      el:this.$('.player')
+      el: this.$('.player'),
+      model: this.videos.models[0],
+      collection: this.videos
     }).render();
 
     new SearchView({
-      el:this.$('.search')
+      el: this.$('.search')
     }).render();
 
     return this;
