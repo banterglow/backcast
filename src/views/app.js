@@ -40,6 +40,11 @@ var AppView = Backbone.View.extend({
           }
         });
       });
+      $('.form-control').keypress(function(e) {
+        if (e.keyCode === 13) {
+          $('#search-btn').trigger('click');
+        }
+      });
     });
     
   },
