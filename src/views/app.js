@@ -3,7 +3,6 @@ var AppView = Backbone.View.extend({
   el: '#app',
 
   initialize: function(videoData = window.exampleVideoData) {
-    console.log('top this', this);
     this.videos = new Videos(videoData);
     this.videos.search('kittens');
     this.render();
