@@ -3,7 +3,7 @@ var VideoListView = Backbone.View.extend({
   el: '.video-list',
 
   initialize: function() {
-    this.collection.on('sync', this.render, this);
+    this.collection.on('search', this.render, this);
     // listen for videoListEntry to tell videoList that it has been clicked, then it will notify app.js
   },
 

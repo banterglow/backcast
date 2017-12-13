@@ -21,24 +21,26 @@ var AppView = Backbone.View.extend({
         collection: this.videos
       }).render();
     }, this);
+
+    appViewThis = this;
     
     $(function() {
       $('#search-btn').on('click', function() {
-        console.log('hello');
-        $.ajax({
-          url: 'https://www.googleapis.com/youtube/v3/search',
-          data: {
-            part: 'snippet',
-            key: window.YOUTUBE_API_KEY,
-            q: $('.form-control').val(),
-            maxResults: 5,
-            type: 'video',
-            videoEmbeddable: 'true'
-          },
-          success: function (data) {
-            new AppView(data.items).render();
-          }
-        });
+        appViewThis.videos.search($('.form-control').val());
+        // $.ajax({
+        //   url: 'https://www.googleapis.com/youtube/v3/search',
+        //   data: {
+        //     part: 'snippet',
+        //     key: window.YOUTUBE_API_KEY,
+        //     q: $('.form-control').val(),
+        //     maxResults: 5,
+        //     type: 'video',
+        //     videoEmbeddable: 'true'
+        //   },
+        //   success: function (data) {
+        //     new AppView(data.items).render();
+        //   }
+        // });
       });
       $('.form-control').keypress(function(e) {
         if (e.keyCode === 13) {
