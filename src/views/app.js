@@ -2,9 +2,9 @@ var AppView = Backbone.View.extend({
 
   el: '#app',
 
-  initialize: function() {
+  initialize: function(videoData = window.exampleVideoData) {
     console.log('top this', this);
-    this.videos = new Videos(window.exampleVideoData);
+    this.videos = new Videos(videoData);
     this.render();
 
     this.videos.on('videoChange', function(id) {
@@ -35,14 +35,8 @@ var AppView = Backbone.View.extend({
             type: 'video',
             videoEmbeddable: 'true'
           },
-          success: function(data) {
-            console.log(data.items);
-            console.log('this', this);
-            this.videos = new Videos(data.items);
-            new VideoListView({
-              el: this.$('.list'),
-              collection: this.videos
-            }).render();
+          success: function (data) {
+            new AppView(data.items).render();
           }
         });
       });
