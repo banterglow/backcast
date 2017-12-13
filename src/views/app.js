@@ -5,6 +5,7 @@ var AppView = Backbone.View.extend({
   initialize: function(videoData = window.exampleVideoData) {
     console.log('top this', this);
     this.videos = new Videos(videoData);
+    this.videos.search('kittens');
     this.render();
 
     this.videos.on('videoChange', function(id) {
