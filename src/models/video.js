@@ -9,7 +9,11 @@ var Video = Backbone.Model.extend({
   },
 
   select: function(id) {
-    this.trigger('videoChange', this.collection.select(id));
-  }
+    this.trigger('videoChange', id);
+  },
+
+  // search: function(query) {
+  //   this.fetch()
+  // } 
 
 });

@@ -3,9 +3,51 @@ var AppView = Backbone.View.extend({
   el: '#app',
 
   initialize: function() {
+    console.log('top this', this);
     this.videos = new Videos(window.exampleVideoData);
     this.render();
-    this.on('videoChange', console.log('trigger!!'));
+
+    this.videos.on('videoChange', function(id) {
+      var selectedVideo;
+      for (var i = 0; i < this.videos.models.length; i++) {
+        if (this.videos.models[i].id === id) {
+          selectedVideo = this.videos.models[i];
+          break;
+        }
+      }
+      new VideoPlayerView({
+        el: this.$('.player'),
+        model: selectedVideo,
+        collection: this.videos
+      }).render();
+    }, this);
+    
+    $(function() {
+      $('#search-btn').on('click', function() {
+        console.log('hello');
+        $.ajax({
+          url: 'https://www.googleapis.com/youtube/v3/search',
+          data: {
+            part: 'snippet',
+            key: window.YOUTUBE_API_KEY,
+            q: $('.form-control').val(),
+            maxResults: 5,
+            type: 'video',
+            videoEmbeddable: 'true'
+          },
+          success: function(data) {
+            console.log(data.items);
+            console.log('this', this);
+            this.videos = new Videos(data.items);
+            new VideoListView({
+              el: this.$('.list'),
+              collection: this.videos
+            }).render();
+          }
+        });
+      });
+    });
+    
   },
 
   render: function() {
@@ -28,7 +70,7 @@ var AppView = Backbone.View.extend({
 
     return this;
   },
-
+  
   template: templateURL('src/templates/app.html')
 
   // Listeners

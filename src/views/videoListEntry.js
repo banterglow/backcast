@@ -5,7 +5,7 @@ var VideoListEntryView = Backbone.View.extend({
   },
 
   handleClick: function(e) {
-    this.model.select(e.target.className.slice(23));
+    this.model.select(e.target.id);
   },
 
   render: function() {
